@@ -1,0 +1,27 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+dist
+*/**/tmp
+*/**/out-tsc
+*/**/bazel-out
+*/**/node_modules
+*/**/npm-debug.log
+*/**/yarn-error.log
+.idea/
+.project
+.classpath
+.vscode
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+.history/*
+.DS_Store
+Thumbs.db
+.devcontainer
+*.dmp
+*.log
+*.tar.gz
+*.wiki
+slides-containers.html
+slides-k8s-concepts.html
