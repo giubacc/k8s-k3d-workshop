@@ -44,6 +44,7 @@ _class: lead
 - etcd (key/value store for cluster state)
 
 **Worker Nodes**
+
 - Kubelet (agent running on each node)
 - Kube-proxy (networking)
 - Container runtime (containerd, CRI-O, etc.)
@@ -55,7 +56,7 @@ _class: lead
 - **Control Plane**: decides *what should happen*
 - **Worker Nodes**: do the actual work (run Pods)
 
-👉 API Server is the “front door” of the cluster
+👉 API Server is the “front door” of the cluster  
 👉 etcd is the “source of truth”
 
 ---
@@ -106,11 +107,38 @@ _class: lead
 
 ---
 
+# Desired State vs Actual State
+
+- **Core principle of Kubernetes**:
+  - You define the **desired state** (e.g. 3 replicas of nginx)
+  - Kubernetes continuously works to match the **actual state**
+- The **control loop**:
+  1. You declare what you want
+  2. The system observes the current cluster
+  3. It makes adjustments until actual = desired
+
+👉 Kubernetes is a **self-healing system**
+
+---
+
+# Imperative vs Declarative
+
+- **Imperative**: tell the system *exactly what to do*
+  - `kubectl run nginx --image=nginx`
+  - Procedural, step by step
+- **Declarative**: tell the system *what you want*
+  - Write a YAML → `kubectl apply -f nginx.yaml`
+  - Kubernetes figures out how to reach that state
+- Declarative approach = **GitOps friendly** and reproducible
+
+---
+
 # Recap
 
 - **Why Kubernetes** → containers need orchestration
 - **Cluster architecture** → Control Plane + Worker Nodes
 - **Basic Concepts** → Pods, Deployments, Services, Namespaces
+- **Core model** → Desired vs Actual state, Declarative configs
 
 👉 With this foundation, we can start **hands-on with k3d**!
 

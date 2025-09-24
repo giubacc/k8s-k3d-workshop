@@ -57,3 +57,29 @@ marp slides-k8s-concepts.md --pdf --allow-local-files
 ```bash
 marp slides-k8s-concepts.md --pptx --allow-local-files
 ```
+
+### K3d Hands On Slides
+
+#### Present
+
+```bash
+marp slides-k3d-hands-on.md --preview
+```
+
+#### Export to HTML
+
+```bash
+marp slides-k3d-hands-on.md --html --allow-local-files
+```
+
+#### Export to PDF
+
+```bash
+marp slides-k3d-hands-on.md --pdf --allow-local-files
+```
+
+#### Export to PowerPoint
+
+```bash
+marp slides-k3d-hands-on.md --pptx --allow-local-files
+```
