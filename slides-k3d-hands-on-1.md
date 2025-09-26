@@ -8,7 +8,7 @@ paginate: true
 
 ---
 
-# Step 0 — Check prerequisites (5m)
+# Step 0 — Check prerequisites
 
 - Verify Docker is running:
 ```bash
@@ -46,7 +46,7 @@ k3d version
 
 ---
 
-# Step 3 — Create a cluster (10m)
+# Step 3 — Create a cluster
 
 - Create a new cluster:
 ```bash
@@ -62,7 +62,7 @@ kubectl get nodes -o wide
 
 ---
 
-# Step 4 — Explore the cluster (10m)
+# Step 4 — Explore the cluster
 
 - List all namespaces & pods:
 ```bash
@@ -79,7 +79,7 @@ kubectl get pods -A
 
 ---
 
-# Step 5 — Deploy a simple app (15m)
+# Step 5 — Deploy a simple app
 
 - Write a Deployment manifest `nginx-deployment.yaml`:
 
@@ -96,7 +96,7 @@ kubectl describe deployment nginx-deployment
 
 ---
 
-# Step 6 — Expose the app (10m)
+# Step 6 — Expose the app
 
 - Expose as NodePort service:
 ```bash
@@ -113,7 +113,7 @@ kubectl get svc
 
 ---
 
-# Step 7 — Cleanup & recap (5m)
+# Step 7 — Cleanup & recap
 
 - Delete resources:
 ```bash

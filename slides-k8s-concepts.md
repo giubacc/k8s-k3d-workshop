@@ -5,7 +5,7 @@ paginate: true
 _class: lead
 ---
 
-# Kubernetes Concepts (30m)
+# Kubernetes Concepts
 
 ---
 
