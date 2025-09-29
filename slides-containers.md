@@ -119,7 +119,7 @@ echo $pid | sudo tee /sys/fs/cgroup/mydemo/cgroup.procs
 sudo mkdir -p /sys/fs/cgroup/memorydemo
 echo $((50*1024*1024)) | sudo tee /sys/fs/cgroup/memorydemo/memory.max
 
-python3 -c "a = ' ' * 100_000_000; print('Allocated!'); input()" &
+python3 -c "a = ' ' * 100_000_000; print('Allocated\!'); input()" &
 pid=$!
 
 echo $pid | sudo tee /sys/fs/cgroup/memorydemo/cgroup.procs

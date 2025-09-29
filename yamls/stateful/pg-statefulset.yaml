@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-config
+  namespace: demo
+data:
+  config-0.env: |
+    REPMGR_PRIMARY_ROLE=yes
+    REPMGR_NODE_ID=1
+    REPMGR_NODE_NAME=pg-0
+    REPMGR_PRIMARY_HOST=pg-0.pg.demo.svc.cluster.local
+    REPMGR_NODE_NETWORK_NAME=pg-0.pg.demo.svc.cluster.local
+    REPMGR_PARTNER_NODES=pg-0.pg.demo.svc.cluster.local,pg-1.pg.demo.svc.cluster.local
+  config-1.env: |
+    REPMGR_PRIMARY_ROLE=no
+    REPMGR_NODE_ID=2
+    REPMGR_NODE_NAME=pg-1
+    REPMGR_PRIMARY_HOST=pg-0.pg.demo.svc.cluster.local
+    REPMGR_NODE_NETWORK_NAME=pg-1.pg.demo.svc.cluster.local
+    REPMGR_PARTNER_NODES=pg-0.pg.demo.svc.cluster.local,pg-1.pg.demo.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg
+  namespace: demo
+spec:
+  clusterIP: None
+  ports:
+    - port: 5432
+      name: postgres
+  selector:
+    app: pg
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pg
+  namespace: demo
+spec:
+  serviceName: pg
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pg
+  template:
+    metadata:
+      labels:
+        app: pg
+    spec:
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: configmap-vol
+          configMap:
+            name: pg-config
+        - name: app-config
+          emptyDir: {}
+      initContainers:
+        - name: init-copy-config
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              ordinal=$(echo $HOSTNAME | awk -F'-' '{print $NF}')
+              cp /configmap/config-$ordinal.env /app-config/config.env
+          volumeMounts:
+            - name: configmap-vol
+              mountPath: /configmap
+            - name: app-config
+              mountPath: /app-config
+      containers:
+        - name: postgres
+          image: bitnami/postgresql-repmgr:15
+          command:
+            - sh
+            - -c
+            - |
+              set -a
+              . /app-config/config.env   # load per-pod env vars
+              set +a
+              exec /opt/bitnami/scripts/postgresql-repmgr/entrypoint.sh /opt/bitnami/scripts/postgresql-repmgr/run.sh
+          env:
+            - name: REPMGR_USERNAME
+              value: repmgr
+            - name: REPMGR_PASSWORD
+              value: repmgrpass
+            - name: POSTGRESQL_PASSWORD
+              value: postgrespass
+            - name: POSTGRESQL_USERNAME
+              value: postgres
+            - name: POSTGRESQL_DATABASE
+              value: appdb
+            - name: REPMGR_PRIMARY_PORT
+              value: "5432"
+          volumeMounts:
+            - name: app-config
+              mountPath: /app-config
+            - name: data
+              mountPath: /bitnami/postgresql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

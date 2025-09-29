@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-config
+  namespace: demo
+data:
+  config-0.yaml: |
+    role: primary
+    db_host: db-0.myapp.demo.svc.cluster.local
+  config-1.yaml: |
+    role: replica
+    db_host: db-0.myapp.demo.svc.cluster.local
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp
+  namespace: demo
+spec:
+  serviceName: myapp
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      volumes:
+        - name: configmap-vol
+          configMap:
+            name: myapp-config
+        - name: app-config
+          emptyDir: {} # where we’ll copy the right config
+      initContainers:
+        - name: init-copy-config
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              ordinal=$(echo $HOSTNAME | awk -F'-' '{print $NF}')
+              cp /configmap/config-$ordinal.yaml /app-config/config.yaml
+          volumeMounts:
+            - name: configmap-vol
+              mountPath: /configmap
+            - name: app-config
+              mountPath: /app-config
+      containers:
+        - name: myapp
+          image: busybox:1.36
+          command: ["sh", "-c", "cat /app/config.yaml && sleep 3600"]
+          volumeMounts:
+            - name: app-config
+              mountPath: /app
