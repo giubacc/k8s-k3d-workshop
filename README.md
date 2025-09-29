@@ -6,7 +6,7 @@
 sudo npm install -g @marp-team/marp-cli
 ```
 
-## Exporing slides
+## Exporting slides
 
 ### Export to HTML
 

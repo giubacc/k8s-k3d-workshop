@@ -92,6 +92,20 @@ ps -ef    # only shows processes in this namespace
 
 ---
 
+# History
+
+[Linux Kernel 2.6.16 - 2006 - Add unshare system call](https://kernelnewbies.org/Linux_2_6_16)
+
+```bash
+$ man unshare
+```
+
+```bash
+$ man 2 unshare
+```
+
+---
+
 # cgroups Overview
 
 - **cgroups** = control groups
@@ -105,7 +119,7 @@ ps -ef    # only shows processes in this namespace
 
 # cgroups
 
-![height:500px](./assets/cgroups.jpg)
+![height:500px](./assets/cgroups.png)
 
 ---
 
@@ -140,6 +154,22 @@ echo $pid | sudo tee /sys/fs/cgroup/memorydemo/cgroup.procs
 
 - Memory limit = **50 MB**
 - Process should be killed by OOM (SIGKILL) when exceeding the limit
+
+---
+
+# History
+
+[Linux Kernel 2.6.12 - 2005 - Add cpusets](https://kernelnewbies.org/Linux_2_6_12)
+
+[Linux Kernel 2.6.24 - 2008 - Add CONFIG_CGROUPS kernel configuration option](https://kernelnewbies.org/Linux_2_6_24)
+
+```bash
+$ man cpuset
+```
+
+```bash
+$ man cgroups
+```
 
 ---
 
@@ -192,6 +222,61 @@ echo $$ > /sys/fs/cgroup/mycontainer/cgroup.procs
 - Ensure cgroup v2 is mounted at `/sys/fs/cgroup`
 - Some distros require `systemd.unified_cgroup_hierarchy=1`
 - Clean up background jobs after demos
+
+---
+
+# Container Ecosystem Timeline
+
+### **Early 2000s**
+
+* **2003–2004** → Google begins developing **Borg** internally to manage massive clusters.
+* **2004** → Linux adds **cpusets** (Linux 2.6.12), an early precursor to cgroups, letting admins bind processes to specific CPUs/memory nodes.
+
+---
+
+### **Mid 2000s**
+
+* **2006 (Linux 2.6.16)** → First **namespaces**:
+
+  * UTS (hostname isolation)
+  * IPC (System V / POSIX IPC isolation)
+
+* **2007 (Linux 2.6.23)** → **User namespace** (initial version, not fully usable yet).
+
+* **2008 (Linux 2.6.24)** →
+
+  * **cgroups** (merged into kernel, originally “process containers”)
+  * **PID namespace**
+  * **Network namespace**
+
+  ➝ These gave Linux the **foundations for real containers**.
+
+* **2008** → **LXC (Linux Containers)** project, combining cgroups + namespaces.
+
+---
+
+### **2010s**
+
+* **2013** → **Docker** launches, building on LXC but focusing on developer-friendly workflows, image distribution, and portability.
+* **2015** → Google publishes the **Borg paper**, revealing details of its internal system.
+* **2016 (Linux 4.5)** → **cgroups v2** merged, simplifying and unifying the cgroup hierarchy.
+
+---
+
+### **Late 2010s – 2020s**
+
+* **2016** → Kubernetes (inspired by Borg/Omega) becomes the de facto orchestration system.
+* **2016 (Linux 4.6)** → **Cgroup namespaces** added.
+* **2020 (Linux 5.6)** → **Time namespaces** added.
+
+---
+
+**Summary**:
+
+* **Borg**: 2003–2004 (Google-only, ran without mainline cgroups/namespaces).
+* **Linux primitives (cgroups + namespaces)**: 2006–2008 → enabled open-source containers.
+* **LXC/Docker**: 2008–2013 → popularized containers globally.
+* **Kubernetes**: 2014+ → orchestration layer inspired by Borg.
 
 ---
 

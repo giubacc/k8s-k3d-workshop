@@ -4,7 +4,7 @@ theme: default
 paginate: true
 ---
 
-# k3d Hands-On (1h)
+# k3d Hands-On
 
 ---
 
