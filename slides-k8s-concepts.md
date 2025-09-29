@@ -61,6 +61,12 @@ _class: lead
 
 ---
 
+# Architecture
+
+![height:500px](./assets/k8s-arch.jpg)
+
+---
+
 # Basic Concepts: Pods
 
 - Smallest deployable unit in Kubernetes
@@ -69,6 +75,12 @@ _class: lead
   - Share **network namespace**
   - Can communicate via `localhost`
   - Can share volumes
+
+---
+
+# Pods
+
+![height:500px](./assets/pod.jpeg)
 
 ---
 
@@ -84,6 +96,12 @@ _class: lead
 
 ---
 
+# Deployments
+
+![height:500px](./assets/deployment.png)
+
+---
+
 # Basic Concepts: Services
 
 - Expose Pods to the network
@@ -93,6 +111,12 @@ _class: lead
   - **LoadBalancer**: external, cloud provider integration
 
 👉 Services provide **stable DNS names** and load balancing across Pods
+
+---
+
+# Services
+
+![height:500px](./assets/services.jpg)
 
 ---
 

@@ -6,7 +6,8 @@ _class: lead
 ---
 
 # Introduction to Containers
-### Namespaces & cgroups: building blocks
+
+## Namespaces & cgroups: building blocks
 
 ---
 
@@ -29,6 +30,12 @@ _class: lead
   - Mount table (Mount namespace)
   - Process tree (PID)
 - We’ll demo: **UTS**, **Mount**, **PID**
+
+---
+
+# namespaces
+
+![height:400px](./assets/k-ns.png)
 
 ---
 
@@ -96,6 +103,12 @@ ps -ef    # only shows processes in this namespace
 
 ---
 
+# cgroups
+
+![height:500px](./assets/cgroups.jpg)
+
+---
+
 # CPU cgroup Demo (~10% CPU)
 
 ```bash
@@ -127,6 +140,12 @@ echo $pid | sudo tee /sys/fs/cgroup/memorydemo/cgroup.procs
 
 - Memory limit = **50 MB**
 - Process should be killed by OOM (SIGKILL) when exceeding the limit
+
+---
+
+# namespaces vs cgroups
+
+![height:400px](./assets/namespace-cgroups.png)
 
 ---
 

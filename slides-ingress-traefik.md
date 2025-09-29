@@ -47,7 +47,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: web-ingress
-  namespace: demo
 spec:
   rules:
   - host: web.local
@@ -61,6 +60,7 @@ spec:
             port:
               number: 80
 ```
+
 - Routes `http://web.local/` → `web` Service on port 80
 
 ---
