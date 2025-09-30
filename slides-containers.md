@@ -216,15 +216,6 @@ echo $$ > /sys/fs/cgroup/mycontainer/cgroup.procs
 
 ---
 
-# Tips & Caveats
-
-- You may need `sudo` for mounts and cgroups
-- Ensure cgroup v2 is mounted at `/sys/fs/cgroup`
-- Some distros require `systemd.unified_cgroup_hierarchy=1`
-- Clean up background jobs after demos
-
----
-
 # Container Ecosystem Timeline
 
 ### **Early 2000s**
@@ -280,12 +271,12 @@ echo $$ > /sys/fs/cgroup/mycontainer/cgroup.procs
 
 ---
 
-# Next Steps
+# Demo
 
-- Images & runtimes (runc, containerd, Docker)
-- Filesystem isolation (chroot, pivot_root, overlayfs)
-- Networking (net namespaces, veth, CNI)
-- Orchestration (Kubernetes basics)
+- Namespaces
+- Cgroups
+- memhog (C program)
+- ns-cgroup (C program)
 
 ---
 
